@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graz Concert Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Graz Concert Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            {% for concert in concerts %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">{{ concert.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><i class="bi bi-calendar-event"></i> Date: {{ concert.date }}</p>
+                                <p><i class="bi bi-clock"></i> Time: {{ concert.time }}</p>
+                                <p><i class="bi bi-geo-alt"></i> Venue: {{ concert.venue }}</p>
+                                <p><i class="bi bi-ticket-perforated"></i> Available Tickets: {{ concert.available_tickets }}</p>
+                                <p><i class="bi bi-currency-euro"></i> Price Range: {{ concert.price_range }}</p>
+                                <p><i class="bi bi-star-fill text-warning"></i> Rating: {{ concert.rating }}/5.0</p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="weather-info p-3 bg-light rounded">
+                                    <h6>Weather</h6>
+                                    <p><i class="bi bi-thermometer"></i> {{ concert.weather.temperature }}</p>
+                                    <p><i class="bi bi-cloud"></i> {{ concert.weather.condition }}</p>
+                                </div>
+                                <div class="parking-info mt-3 p-3 bg-light rounded">
+                                    <h6>Parking</h6>
+                                    <p><i class="bi bi-p-circle"></i> Spaces: {{ concert.parking.spaces }}</p>
+                                    <p><i class="bi bi-currency-euro"></i> Price: {{ concert.parking.price }}</p>
+                                </div>
+                                <div class="traffic-info mt-3 p-3 bg-light rounded">
+                                    <h6>Traffic</h6>
+                                    <p><i class="bi bi-car-front"></i> Status: {{ concert.traffic.status }}</p>
+                                    <p><i class="bi bi-clock-history"></i> Delay: {{ concert.traffic.delay }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h6>Nearby Places</h6>
+                            <div class="row">
+                                {% for place in concert.nearby_places %}
+                                <div class="col-md-6 mb-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">{{ place.name }}</h6>
+                                            <p class="card-text">
+                                                <i class="bi bi-shop"></i> Type: {{ place.type }}<br>
+                                                <i class="bi bi-clock"></i> Hours: {{ place.opening_hours }}<br>
+                                                <i class="bi bi-star-fill text-warning"></i> Rating: {{ place.rating }}/5.0<br>
+                                                <i class="bi bi-geo-alt"></i> Distance: {{ place.distance }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
